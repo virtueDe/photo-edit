@@ -11,9 +11,19 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 2020,
+    ecmaFeatures: {
+      // Allows for the parsing of JSX
+      jsx: true,
+    },
   },
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "prettier/prettier": [
+      "error",
+      {
+        semi: false,
+      },
+    ],
   },
-};
+}

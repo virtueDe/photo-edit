@@ -5,6 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-const isTest = ref<boolean>(false);
+import { ref } from "vue"
+const isTest = ref<boolean>(false)
 </script>
