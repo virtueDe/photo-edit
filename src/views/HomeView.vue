@@ -1,12 +1,21 @@
 <template>
   <div class="edit">
     <div class="edit-toolbar"></div>
-    <div class="edit-canvas"></div>
+    <div class="edit-canvas" id="editCanvas"></div>
     <div class="edit-controls"></div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { onMounted } from "vue"
+import { PhotoEdit } from "./photo-edit"
+
+onMounted(() => {
+  new PhotoEdit(document.getElementById("editCanvas") as HTMLElement, {
+    src: require("./img.png"),
+  })
+})
+
 // import { ref } from "vue"
 // const isTest = ref<boolean>(false)
 </script>
