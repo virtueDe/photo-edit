@@ -33,10 +33,10 @@ onMounted(() => {
   }
   &-canvas {
     flex: 1;
-    background: rgb(194, 194, 195);
-    background-image: linear-gradient(90deg, rgb(246, 239, 239) 10%, rgba(172, 128, 128, 0) 10%),
-      linear-gradient(rgba(180, 180, 180, 0.15) 10%, rgba(0, 0, 0, 0) 10%);
-    background-size: 10px 10px;
+    background: rgb(72, 69, 69);
+    background-image: linear-gradient(rgb(95, 95, 95) 1px, transparent 0), linear-gradient(90deg, rgb(95, 95, 95) 1px, transparent 0),
+      linear-gradient(hsla(0, 0%, 100%, 0.3) 1px, transparent 0), linear-gradient(90deg, hsla(0, 0%, 100%, 0.3) 1px, transparent 0);
+    background-size: 15px 15px;
   }
   &-controls {
     height: 120px;
