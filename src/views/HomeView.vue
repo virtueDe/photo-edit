@@ -1,8 +1,8 @@
 <template>
   <div class="edit">
-    <!-- <div class="edit-toolbar"></div> -->
+    <div class="edit-toolbar"></div>
     <div class="edit-canvas" id="editCanvas"></div>
-    <!-- <div class="edit-controls"></div> -->
+    <div class="edit-controls"></div>
   </div>
 </template>
 
@@ -24,18 +24,18 @@ onMounted(() => {
 .edit {
   width: 100%;
   height: 100%;
-  // display: flex;
-  // flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
   &-toolbar {
     height: 50px;
     background-color: #262626;
   }
   &-canvas {
-    width: 1000px;
-    height: 1000px;
-    margin: 0 auto;
-    // flex: 1;
+    // width: 1000px;
+    // height: 1000px;
+    // margin: 0 auto;
+    flex: 1;
     background: rgb(72, 69, 69);
     background-image: linear-gradient(rgb(95, 95, 95) 1px, transparent 0), linear-gradient(90deg, rgb(95, 95, 95) 1px, transparent 0),
       linear-gradient(hsla(0, 0%, 100%, 0.3) 1px, transparent 0), linear-gradient(90deg, hsla(0, 0%, 100%, 0.3) 1px, transparent 0);
