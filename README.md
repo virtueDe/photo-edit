@@ -17,6 +17,15 @@
 
 canvas学习
 参考地址： https://github.com/827652549/CanvasStudy
+参考地址： https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/rect
+
+
+## feature
+
+- 拖拽
+- 缩放
+- 旋转
+- 裁剪
 
 ## Project setup
 ```

@@ -2,17 +2,25 @@
   <div class="edit">
     <div class="edit-toolbar"></div>
     <div class="edit-canvas" id="editCanvas"></div>
-    <div class="edit-controls"></div>
+    <div class="edit-controls">
+      <span @click="handleCrop">裁剪</span>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { onMounted } from "vue"
-import { PhotoEdit } from "./photo-edit"
+import { PhotoEdit } from "@/photoEdit/index"
+
+let photoEdit: any = null
+
+const handleCrop = () => {
+  photoEdit.crop()
+}
 
 onMounted(() => {
-  new PhotoEdit(document.getElementById("editCanvas") as HTMLElement, {
-    src: require("./img.png"),
+  photoEdit = new PhotoEdit(document.getElementById("editCanvas") as HTMLElement, {
+    src: require("./im.png"),
   })
 })
 
