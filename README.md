@@ -15,7 +15,13 @@
 裁剪图片参考地址： https://github.com/cjj281795819/canvas-img-edit
 裁剪图片参考地址： https://github.com/lsj9757/img-trim
 
-canvas学习
+## 类似项目
+参考地址： https://github.com/ximing/fabric-photo
+参考地址： https://github.com/minqun/edit-photo-text
+参考地址： https://github.com/lyhiving/my-matting
+参考地址： https://github.com/Alvinyw/imageViewer
+
+## canvas学习
 参考地址： https://github.com/827652549/CanvasStudy
 参考地址： https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/rect
 
