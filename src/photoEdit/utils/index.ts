@@ -84,3 +84,18 @@ export const getCursorStyle = (i: number) => {
   }
   return cursor
 }
+
+// /**
+//  * 获取ratio
+//  * @param context
+//  */
+// export const getPixelRatio = (context: CanvasRenderingContext2D) => {
+//   const backingStore =
+//     context.backingStorePixelRatio ||
+//     context.webkitBackingStorePixelRatio ||
+//     context.mozBackingStorePixelRatio ||
+//     context.msBackingStorePixelRatio ||
+//     context.oBackingStorePixelRatio ||
+//     1
+//   return (window.devicePixelRatio || 1) / backingStore
+// }

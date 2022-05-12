@@ -65,6 +65,9 @@ class PhotoEdit {
 
   mousePosi: number[][] = []
 
+  cursorIndex = 9
+  tempCursorIndex: number | null = null
+
   // options: PhotoEditOptions = {
   //   src,
   // }
@@ -91,11 +94,10 @@ class PhotoEdit {
     this.sourceImg.src = src
 
     this.sourceImg.onload = () => {
-      this.position.imageCanvasPosition.scale = 0.15
-      // this.position.imageCanvasPosition.scale =
-      //   Math.min(this.containerCanvas.width / this.sourceImg.width, this.containerCanvas.height / this.sourceImg.height) >= 3
-      //     ? 3
-      //     : Math.min(this.containerCanvas.width / this.sourceImg.width, this.containerCanvas.height / this.sourceImg.height)
+      this.position.imageCanvasPosition.scale =
+        Math.min((this.containerCanvas.width - 200) / this.sourceImg.width, (this.containerCanvas.height - 200) / this.sourceImg.height) >= 3
+          ? 3
+          : Math.min((this.containerCanvas.width - 200) / this.sourceImg.width, (this.containerCanvas.height - 200) / this.sourceImg.height)
 
       this.position.imageCanvasPosition.width = this.sourceImg.width * this.position.imageCanvasPosition.scale
       this.position.imageCanvasPosition.height = this.sourceImg.height * this.position.imageCanvasPosition.scale
@@ -106,7 +108,10 @@ class PhotoEdit {
       this.imageCanvas.height = this.position.imageCanvasPosition.height
       this.imageCanvasCtx.drawImage(this.sourceImg, 0, 0, this.position.imageCanvasPosition.width, this.position.imageCanvasPosition.height)
 
-      this.cropPosition = this.position.imageCanvasPosition
+      this.cropPosition.x = this.position.imageCanvasPosition.x
+      this.cropPosition.y = this.position.imageCanvasPosition.y
+      this.cropPosition.width = this.position.imageCanvasPosition.width
+      this.cropPosition.height = this.position.imageCanvasPosition.height
       // this.criticalValue.x[0] = 200
       // this.criticalValue.y[0] = 200
 
@@ -211,28 +216,92 @@ class PhotoEdit {
   _onMouseup(e: MouseEvent) {
     // this.handleStatus.isCrop = false
     this.handleStatus.isDown = false
+    this.tempCursorIndex = null
     // this.handleStatus.hasPosition = false
   }
   _onMousemove(e: MouseEvent) {
     e.preventDefault()
     if (this.handleStatus.isCrop) {
       let cursor = "default"
+      this.cursorIndex = 9
       // cursorIndex = 9
       const { x: clientX, y: clientY } = this.toContainerCanvasPio(e.clientX, e.clientY)
       for (let i = 0; i < this.mousePosi.length; i++) {
         if (this.checkInPath(clientX, clientY, this.mousePosi[i])) {
           cursor = getCursorStyle(i)
+          this.cursorIndex = i
           break
         }
       }
       this.container.style.cursor = cursor
 
       if (this.handleStatus.isDown) {
-        console.log(clientX - this.downPo.x)
-        console.log(clientY - this.downPo.y)
+        const differenceX = clientX - this.downPo.x
+        const differenceY = clientY - this.downPo.y
+        const tempIndex = this.tempCursorIndex === null ? this.cursorIndex : this.tempCursorIndex
+        console.log(tempIndex)
+        switch (tempIndex) {
+          // 左上角
+          case 0:
+            this.cropPosition.x += differenceX
+            this.cropPosition.y += differenceY
+            this.cropPosition.width -= differenceX
+            this.cropPosition.height -= differenceY
+            break
 
-        this.cropPosition.width += clientX - this.downPo.x
-        this.cropPosition.height += clientY - this.downPo.y
+          // 右上角
+          case 1:
+            this.cropPosition.y += differenceY
+            this.cropPosition.width += differenceX
+            this.cropPosition.height -= differenceY
+            break
+
+          // 右下角
+          case 2:
+            this.cropPosition.width += differenceX
+            this.cropPosition.height += differenceY
+            break
+
+          // 左下角
+          case 3:
+            this.cropPosition.x += differenceX
+            this.cropPosition.width -= differenceX
+            this.cropPosition.height += differenceY
+            break
+
+          // 上
+          case 4:
+            this.cropPosition.y += differenceY
+            this.cropPosition.height -= differenceY
+            break
+
+          // 右
+          case 5:
+            this.cropPosition.width += differenceX
+            break
+
+          // 下
+          case 6:
+            this.cropPosition.height += differenceY
+            break
+
+          // 左
+          case 7:
+            this.cropPosition.x += differenceX
+            this.cropPosition.width -= differenceX
+            break
+
+          // 整体
+          case 8:
+            this.cropPosition.x += differenceX
+            this.cropPosition.y += differenceY
+            break
+          default:
+            break
+        }
+
+        // this.cropPosition.width += clientX - this.downPo.x
+        // this.cropPosition.height += clientY - this.downPo.y
 
         this.crop()
 
@@ -250,6 +319,10 @@ class PhotoEdit {
         // this.cropPosition.width += pointerChangeX
         // this.crop()
         // console.log(this.pointerLast)
+
+        if (this.tempCursorIndex === null) {
+          this.tempCursorIndex = this.cursorIndex
+        }
       }
     }
     // if (this.handleStatus.isDown && this.handleStatus.hasPosition) {
@@ -350,16 +423,16 @@ class PhotoEdit {
     this.containerCanvasCtx.restore()
 
     // this._draw()
-    // this.containerCanvasCtx.save()
-    // this.containerCanvasCtx.globalCompositeOperation = "destination-over"
-    // this.containerCanvasCtx.drawImage(
-    //   this.imageCanvas,
-    //   this.position.imageCanvasPosition.x,
-    //   this.position.imageCanvasPosition.y,
-    //   this.position.imageCanvasPosition.width,
-    //   this.position.imageCanvasPosition.height
-    // )
-    // this.containerCanvasCtx.restore()
+    this.containerCanvasCtx.save()
+    this.containerCanvasCtx.globalCompositeOperation = "destination-over"
+    this.containerCanvasCtx.drawImage(
+      this.imageCanvas,
+      this.position.imageCanvasPosition.x,
+      this.position.imageCanvasPosition.y,
+      this.position.imageCanvasPosition.width,
+      this.position.imageCanvasPosition.height
+    )
+    this.containerCanvasCtx.restore()
 
     this.mousePosi = getMousePosi(x, y, width, height)
     this.mousePosi.push([x, y, width, height])
