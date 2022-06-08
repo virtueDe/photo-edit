@@ -11,7 +11,8 @@
 <script lang="ts" setup>
 import { onMounted } from "vue"
 import { PhotoEdit } from "@/photoEdit/index"
-
+import im from "./im.png"
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let photoEdit: any = null
 
 const handleCrop = () => {
@@ -20,7 +21,7 @@ const handleCrop = () => {
 
 onMounted(() => {
   photoEdit = new PhotoEdit(document.getElementById("editCanvas") as HTMLElement, {
-    src: require("./im.png"),
+    src: im,
   })
 })
 
